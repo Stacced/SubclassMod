@@ -22,6 +22,8 @@ Example of creating custom subclass and customizating roles (**Every new subclas
     max_players: 0
     # Health value
     health: 100
+    # Chance to be spawned as this role
+    spawn_percent: 50
     # Player display nickname and just class name that will be showed on spawn
     name: Seniour Scientist 
     # Subclass description that will be showed on spawn

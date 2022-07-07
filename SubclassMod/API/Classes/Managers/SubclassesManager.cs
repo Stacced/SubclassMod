@@ -125,6 +125,9 @@ namespace SubclassMod.API.Classes.Managers
         {
             if (subclassInfo.MaxPlayers.Equals(0))
                 return true;
+
+            if (Random.Range(0, 100) <= subclassInfo.SpawnPercent)
+                return true;
             
             List<SubclassedPlayer> subclassedPlayers = new List<SubclassedPlayer>();
             

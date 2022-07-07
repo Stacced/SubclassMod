@@ -9,6 +9,7 @@ namespace SubclassMod.API.Classes
         public int Id { get; set; } = 0;
         public int MaxPlayers { get; set; } = 0;
         public float Health { get; set; } = 100f;
+        public float SpawnPercent { get; set; } = 50f;
 
         public string Name { get; set; } = "Unknown subclass";
         public string Description { get; set; } = "Description of unknown subclass";
