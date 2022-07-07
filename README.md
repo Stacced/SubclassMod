@@ -1,2 +1,63 @@
-## SubclassMod
-> This is a game modification for SCP:SL that adds to the game the ability to create and configure subclasses, as well as modify existing game roles.
+## SubclassMod (v1.0.2) (EXILED-5.0.0)
+This is a game modification for SCP:SL that adds to the game the ability to create and configure subclasses, as well as modify existing game roles. This modification will allow you to create your own subclasses and customize them as you like, up to replacing the HP level. Or you can customize the entire class by changing its name/prefix/postfix or overwriting the inventory for a particular class. Also support roleplay firstnames and secondnames for human classes.
+
+## Installation
+Download latest plugin release and put ``SubclassMod.dll`` inside your ``/EXILED/Plugins/`` folder. __EXILED-5.0.0 version required__.
+
+## Configs Management
+Example of creating custom subclass and customizating roles (**Every new subclass should start from '-' and have unique ID**):
+### Subclasses setup example
+```yml
+  # All subclasses placed in this list
+  custom_subclasses:
+    # SHOULD BE UNIQUE
+  - id: 0
+    # Player display nickname and just class name that will be showed on spawn
+    name: Seniour Scientist 
+    # Subclass description that will be showed on spawn
+    description: Just a Seniour Scientist
+    # Prefix that will be placed in player display nickname {PREFIX}NAME
+    name_prefix: 'Dr.'
+    # Postfix that will be placed in player display nickname NAME{POSTFIX}
+    name_postfix: ''
+    # Custom info that will be added to player on spawn
+    custom_info: Area Seniour Scientist
+    # Health. Just health.
+    health: 200
+    # Replace player default nickname to random first and second name from config list 
+    roleplay_name_enabled: true
+    # Use second names
+    roleplay_second_name_enabled: true
+    # The role on which the subclass will be based
+    base_role: Scientist
+    # Spawn position search method that will be used on player spawn. Variants: SpawnZone, SpawnPositions, SpawnRooms
+    spawn_method: SpawnZone
+    # Inventory override for subclass
+    items:
+    - Coin
+    - KeycardResearchCoordinator
+    - ParticleDisruptor
+    # Values for spawn methods (ALL BELOW)
+    spawn_zones:
+    - Entrance
+    spawn_rooms:
+    - LczChkpA
+    spawn_positions: []
+```
+
+### Role customization example
+```yml
+  # In this list will be written all classes customizations (ONLY ONE CUSTOMIZATION FOR ONE CLASS). Changes will be applied to all players that will be spawned as selected class.
+  custom_roles_info:
+    FacilityGuard:
+      # Prefix that will be placed before nickname {PREFIX}NAME
+      prefix: Dr.
+      # Postfix that will be placed after nickname NAME{POSTFIX}
+      postfix: Candy
+      # Custom info of overridden role
+      custom_info: Just a sugar doctor
+      # Is inventory overridden
+      inventory_overridden: false
+      # Overwritten class items list
+      inventory_overwrite: []
+```
