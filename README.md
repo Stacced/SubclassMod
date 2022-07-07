@@ -46,6 +46,11 @@ Example of creating custom subclass and customizating roles (**Every new subclas
     base_role: Scientist
     # Spawn position search method that will be used on player spawn. Variants: SpawnZone, SpawnPositions, SpawnRooms
     spawn_method: SpawnZone
+    # Ammo that will be given to player on spawn
+    ammo:
+      Nato9: 10
+      Nato556: 10
+      Nato762: 10
     # Inventory override for subclass
     items:
     - Coin
@@ -68,9 +73,13 @@ Example of creating custom subclass and customizating roles (**Every new subclas
   custom_roles_info:
     FacilityGuard:
       # Prefix that will be placed before nickname {PREFIX}NAME
-      prefix: Dr.
+      name_prefix: Dr.
       # Postfix that will be placed after nickname NAME{POSTFIX}
-      postfix: Candy
+      name_postfix: Candy
+      # Replace default player name to roleplay name and secondname
+      roleplay_name_enabled: true
+      # Use second name in player display roleplay nickname
+      roleplay_second_name_enabled: false
       # Custom info of overridden role
       custom_info: Just a sugar doctor
       # Is inventory overridden

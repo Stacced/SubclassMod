@@ -1,4 +1,5 @@
-﻿using Exiled.API.Enums;
+﻿using System.Collections.Generic;
+using Exiled.API.Enums;
 using SubclassMod.API.Enums;
 using UnityEngine;
 
@@ -23,6 +24,13 @@ namespace SubclassMod.API.Classes
 
         public RoleType BaseRole { get; set; } = RoleType.ClassD;
         public SpawnMethod SpawnMethod { get; set; } = SpawnMethod.SpawnZone;
+
+        public Dictionary<AmmoType, ushort> Ammo { get; set; } = new Dictionary<AmmoType, ushort>
+        {
+            [AmmoType.Nato9] = 10,
+            [AmmoType.Nato556] = 10,
+            [AmmoType.Nato762] = 10
+        };
 
         public ItemType[] Items { get; set; } = { ItemType.Coin };
         public ZoneType[] SpawnZones { get; set; } = { ZoneType.Entrance };

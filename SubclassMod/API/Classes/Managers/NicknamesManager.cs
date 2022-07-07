@@ -22,12 +22,18 @@ namespace SubclassMod.API.Classes.Managers
         public static string GetRoleName(Player player, RoleInfo roleInfo)
         {
             if (!player.IsHuman)
-                return $"{roleInfo.Prefix}{player.DisplayNickname}{roleInfo.Postfix}";
+                return $"{roleInfo.NamePrefix}{player.DisplayNickname}{roleInfo.NamePostfix}";
             
             if (player.Role == RoleType.ClassD && SubclassMod.Instance.Config.ClassDNumbers)
-                return $"{roleInfo.Prefix}{String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify())}{roleInfo.Postfix}";
+                return $"{roleInfo.NamePrefix}{String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify())}{roleInfo.NamePostfix}";
             
-            return $"{roleInfo.Prefix}{SubclassMod.Instance.Config.HumanFirstNames.RandomItem()} {SubclassMod.Instance.Config.HumanSecondNames.RandomItem()}{roleInfo.Postfix}";
+            if (roleInfo.RoleplayNameEnabled && roleInfo.RoleplaySecondNameEnabled)
+                return  $"{roleInfo.NamePrefix}{SubclassMod.Instance.Config.HumanFirstNames.RandomItem()} {SubclassMod.Instance.Config.HumanSecondNames.RandomItem()}{roleInfo.NamePostfix}";
+            
+            if (roleInfo.RoleplayNameEnabled)
+                return  $"{roleInfo.NamePrefix}{SubclassMod.Instance.Config.HumanFirstNames.RandomItem()}{roleInfo.NamePostfix}";
+            
+            return $"{roleInfo.NamePrefix}{player.Nickname}{roleInfo.NamePostfix}";
         }
 
         public static string GetRoleName(Player player)

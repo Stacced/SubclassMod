@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Exiled.API.Enums;
 using Exiled.API.Features;
 using MEC;
 using SubclassMod.API.Enums;
@@ -95,6 +96,9 @@ namespace SubclassMod.API.Classes.Managers
 
             foreach (ItemType item in subclassInfo.Items)
                 player.AddItem(item);
+            
+            foreach (AmmoType type in subclassInfo.Ammo.Keys)
+                player.AddAmmo(type, subclassInfo.Ammo[type]);
 
             player.DisplayNickname = $"{NicknamesManager.GetRoleName(player, subclassInfo)} [{player.Nickname}]";
             player.CustomInfo = subclassInfo.CustomInfo;
