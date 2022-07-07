@@ -70,6 +70,9 @@ namespace SubclassMod.API.Classes.Managers
         {
             yield return Timing.WaitForSeconds(1.5f);
             
+            if (player.Role != subclassInfo.BaseRole)
+                player.SetRole(subclassInfo.BaseRole);
+            
             SubclassedPlayer subclassPlayer = player.GameObject.AddComponent<SubclassedPlayer>();
             subclassPlayer.ActiveSubclass = subclassInfo;
 
