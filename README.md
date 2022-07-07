@@ -4,6 +4,9 @@ This is a game modification for SCP:SL that adds to the game the ability to crea
 ## Installation
 Download latest plugin release and put ``SubclassMod.dll`` inside your ``/EXILED/Plugins/`` folder. All features can be customized in config and translations. __EXILED-5.0.0 version required__.
 
+## Commands
+``force 
+
 ## Configs Management
 Example of creating custom subclass and customizating roles (**Every new subclass should start from '-' and have unique ID**):
 ### Subclasses setup example
@@ -12,6 +15,10 @@ Example of creating custom subclass and customizating roles (**Every new subclas
   custom_subclasses:
     # SHOULD BE UNIQUE
   - id: 0
+    # Maximum value of players that can be spawned on subclass (0 - unlimited)
+    max_players: 0
+    # Health value
+    health: 100
     # Player display nickname and just class name that will be showed on spawn
     name: Seniour Scientist 
     # Subclass description that will be showed on spawn
@@ -22,6 +29,8 @@ Example of creating custom subclass and customizating roles (**Every new subclas
     name_postfix: ''
     # Custom info that will be added to player on spawn
     custom_info: Area Seniour Scientist
+    # Can be class spawned only using command
+    forceclass_only: false
     # Health. Just health.
     health: 200
     # Replace player default nickname to random first and second name from config list 
@@ -42,7 +51,10 @@ Example of creating custom subclass and customizating roles (**Every new subclas
     - Entrance
     spawn_rooms:
     - LczChkpA
-    spawn_positions: []
+    spawn_positions:
+    - x: 0
+      y: 0
+      z: 0
 ```
 
 ### Role customization example
