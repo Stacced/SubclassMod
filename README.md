@@ -6,7 +6,7 @@ Download latest plugin release and put ``SubclassMod.dll`` inside your ``/EXILED
 
 ## Commands
 
-### Force - Force player as subclass
+### ``force`` - Force player as subclass
 Permission: ``scmod.force``
 Usage: ``force <playerId/*> <subclassId>``
 
