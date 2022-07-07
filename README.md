@@ -1,6 +1,2 @@
-# SubclassMod
-SCP:SL EXILED plugin that adding subclasses to your server
-
-1. Describe functionality
-2. Installation guide
-3. Configs setup example
+## SubclassMod
+> This is a game modification for SCP:SL that adds to the game the ability to create and configure subclasses, as well as modify existing game roles.
