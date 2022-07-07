@@ -5,7 +5,10 @@ This is a game modification for SCP:SL that adds to the game the ability to crea
 Download latest plugin release and put ``SubclassMod.dll`` inside your ``/EXILED/Plugins/`` folder. All features can be customized in config and translations. __EXILED-5.0.0 version required__.
 
 ## Commands
-``force 
+
+### Force - Force player as subclass
+Permission: ``scmod.force``
+Usage: ``force <playerId/*> <subclassId>``
 
 ## Configs Management
 Example of creating custom subclass and customizating roles (**Every new subclass should start from '-' and have unique ID**):
