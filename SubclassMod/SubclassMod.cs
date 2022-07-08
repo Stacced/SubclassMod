@@ -10,7 +10,7 @@ namespace SubclassMod
 
         public override string Name => "SubclassMod";
         public override string Author => "microsievert";
-        public override Version Version { get; } = new Version(1, 0, 5);
+        public override Version Version { get; } = new Version(1, 0, 6);
 
         public override Version RequiredExiledVersion { get; } = new Version(5, 0, 0);
 

@@ -70,10 +70,10 @@ namespace SubclassMod.API.Classes.Managers
         public static IEnumerator<float> ForceAsSubclass(Player player, SubclassInfo subclassInfo)
         {
             yield return Timing.WaitForSeconds(1.5f);
-            
+
             if (player.Role != subclassInfo.BaseRole)
                 player.SetRole(subclassInfo.BaseRole);
-            
+
             SubclassedPlayer subclassPlayer = player.GameObject.AddComponent<SubclassedPlayer>();
             subclassPlayer.ActiveSubclass = subclassInfo;
 
@@ -91,12 +91,12 @@ namespace SubclassMod.API.Classes.Managers
             }
 
             player.Health = subclassInfo.Health;
-            
+
             player.ClearInventory();
 
             foreach (ItemType item in subclassInfo.Items)
                 player.AddItem(item);
-            
+
             foreach (AmmoType type in subclassInfo.Ammo.Keys)
                 player.AddAmmo(type, subclassInfo.Ammo[type]);
 
@@ -129,15 +129,16 @@ namespace SubclassMod.API.Classes.Managers
         {
             if (subclassInfo.MaxPlayers.Equals(0))
                 return true;
-
+            
             if (Random.Range(0, 100) <= subclassInfo.SpawnPercent)
                 return true;
-            
+
             List<SubclassedPlayer> subclassedPlayers = new List<SubclassedPlayer>();
-            
+
             foreach (Player target in Player.List)
                 if (target.GameObject.TryGetComponent(out SubclassedPlayer subclassedPlayerComponent))
-                    subclassedPlayers.Add(subclassedPlayerComponent);
+                    if (subclassedPlayerComponent.ActiveSubclass != null)
+                        subclassedPlayers.Add(subclassedPlayerComponent);
 
             return subclassedPlayers.Count(x => x.ActiveSubclass.Equals(subclassInfo)) >= subclassInfo.MaxPlayers;
         }
