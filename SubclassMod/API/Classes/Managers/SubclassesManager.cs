@@ -14,6 +14,9 @@ namespace SubclassMod.API.Classes.Managers
     {
         public static void AssignPlayer(Player player, RoleType role)
         {
+            if (player.GameObject.TryGetComponent<SubclassedPlayer>(out _))
+                return;
+            
             if (TryGetSubclasses(role, out SubclassInfo[] targetSubclasses))
             {
                 if (Random.Range(0, 100) <= SubclassMod.Instance.Config.SubclassChance && SubclassMod.Instance.Config.CustomRolesInfo.ContainsKey(role))

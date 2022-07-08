@@ -1,5 +1,7 @@
 ﻿using Exiled.Events.EventArgs;
 using SubclassMod.API.Classes.Managers;
+using SubclassMod.Components;
+using UnityEngine;
 
 namespace SubclassMod.Events
 {
@@ -11,6 +13,9 @@ namespace SubclassMod.Events
         {
             ev.Player.DisplayNickname = null;
             ev.Player.CustomInfo = null;
+            
+            if (ev.Player.GameObject.TryGetComponent(out SubclassedPlayer subclassedPlayerComponent))
+                Object.Destroy(subclassedPlayerComponent);
         }
     }
 }
