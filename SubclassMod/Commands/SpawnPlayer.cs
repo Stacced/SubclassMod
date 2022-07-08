@@ -43,7 +43,8 @@ namespace SubclassMod.Commands
 
                 SubclassInfo targetSubclass = subclasses.First();
 
-                Timing.RunCoroutine(SubclassesManager.ForceAsSubclass(targetPlayers.First(), targetSubclass));
+                foreach (Player targetPlayer in targetPlayers)
+                    Timing.RunCoroutine(SubclassesManager.ForceAsSubclass(targetPlayer, targetSubclass));
 
                 response = $"Player successfully forced as {targetSubclass.Name}";
                 return true;
