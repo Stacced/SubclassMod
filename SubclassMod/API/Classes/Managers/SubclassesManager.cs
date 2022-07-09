@@ -143,7 +143,7 @@ namespace SubclassMod.API.Classes.Managers
                     if (subclassedPlayerComponent.ActiveSubclass != null)
                         subclassedPlayers.Add(subclassedPlayerComponent);
 
-            return subclassedPlayers.Count(x => x.ActiveSubclass.Equals(subclassInfo)) >= subclassInfo.MaxPlayers;
+            return subclassedPlayers.Count(x => x.ActiveSubclass.Equals(subclassInfo)) < subclassInfo.MaxPlayers;
         }
 
         private static void BroadcastRole(Player player, string roleName, string className, string classDescription) =>
