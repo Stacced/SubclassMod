@@ -6,7 +6,7 @@ using SubclassMod.API.Interfaces;
 
 namespace SubclassMod.API.Classes.Managers
 {
-    public class NicknamesManager
+    public static class NicknamesManager
     {
         public static string GetRoleName(Player player, INamingData namingData = null)
         {

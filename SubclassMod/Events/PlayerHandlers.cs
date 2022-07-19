@@ -1,8 +1,5 @@
-﻿using Exiled.API.Features;
-using Exiled.Events.EventArgs;
+﻿using Exiled.Events.EventArgs;
 using SubclassMod.API.Classes.Managers;
-using SubclassMod.Components;
-using UnityEngine;
 
 namespace SubclassMod.Events
 {

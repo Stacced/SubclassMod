@@ -36,16 +36,14 @@ Example of creating custom subclass and customizating roles (**Every new subclas
     custom_info: Area Seniour Scientist
     # Can be class spawned only using command
     forceclass_only: false
+    # Method that will be used when plugin will select nickname for this role
+    naming_method: Firstname/Signs/Nickname
     # Health. Just health.
     health: 200
-    # Replace player default nickname to random first and second name from config list 
-    roleplay_name_enabled: true
-    # Use second names
-    roleplay_second_name_enabled: true
     # The role on which the subclass will be based
     base_role: Scientist
     # Spawn position search method that will be used on player spawn. Variants: SpawnZone, SpawnPositions, SpawnRooms
-    spawn_method: SpawnZone
+    spawn_method: SpawnZone/SpawnPositions/SpawnRooms
     # Ammo that will be given to player on spawn
     ammo:
       Nato9: 10
@@ -76,10 +74,8 @@ Example of creating custom subclass and customizating roles (**Every new subclas
       name_prefix: Dr.
       # Postfix that will be placed after nickname NAME{POSTFIX}
       name_postfix: Candy
-      # Replace default player name to roleplay name and secondname
-      roleplay_name_enabled: true
-      # Use second name in player display roleplay nickname
-      roleplay_second_name_enabled: false
+      # Naming method for this role
+      naming_method: Firstname/Signs/Nickname
       # Custom info of overridden role
       custom_info: Just a sugar doctor
       # Is inventory overridden
