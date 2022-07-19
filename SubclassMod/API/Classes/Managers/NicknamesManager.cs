@@ -1,66 +1,49 @@
 ﻿using System;
+using System.Linq;
 using Exiled.API.Features;
+using SubclassMod.API.Enums;
+using SubclassMod.API.Interfaces;
 
 namespace SubclassMod.API.Classes.Managers
 {
     public class NicknamesManager
     {
-        public static string GetRoleName(Player player, SubclassInfo subclassInfo)
+        public static string GetRoleName(Player player, INamingData namingData = null)
         {
-            if (!player.IsHuman)
-                return $"{subclassInfo.NamePrefix}{player.Nickname}{subclassInfo.NamePostfix}";
-            
-            if (subclassInfo.RoleplaySecondNameEnabled && subclassInfo.RoleplayNameEnabled)
-                return $"{subclassInfo.NamePrefix}{SubclassMod.Instance.Config.HumanFirstNames.RandomItem()} {SubclassMod.Instance.Config.HumanSecondNames.RandomItem()}{subclassInfo.NamePostfix}";
-            
-            if (subclassInfo.RoleplayNameEnabled)
-                return $"{subclassInfo.NamePrefix}{SubclassMod.Instance.Config.HumanFirstNames.RandomItem()}{subclassInfo.NamePostfix}";
-            
-            return $"{subclassInfo.NamePrefix}{player.Nickname}{subclassInfo.NamePostfix}";
-        }
-        
-        public static string GetRoleName(Player player, RoleInfo roleInfo)
-        {
-            if (!player.IsHuman)
-                return $"{roleInfo.NamePrefix}{player.DisplayNickname}{roleInfo.NamePostfix}";
-            
             if (player.Role == RoleType.ClassD && SubclassMod.Instance.Config.ClassDNumbers)
-                return $"{roleInfo.NamePrefix}{String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify())}{roleInfo.NamePostfix}";
-            
-            if (roleInfo.RoleplayNameEnabled && roleInfo.RoleplaySecondNameEnabled)
-                return  $"{roleInfo.NamePrefix}{SubclassMod.Instance.Config.HumanFirstNames.RandomItem()} {SubclassMod.Instance.Config.HumanSecondNames.RandomItem()}{roleInfo.NamePostfix}";
-            
-            if (roleInfo.RoleplayNameEnabled)
-                return  $"{roleInfo.NamePrefix}{SubclassMod.Instance.Config.HumanFirstNames.RandomItem()}{roleInfo.NamePostfix}";
-            
-            return $"{roleInfo.NamePrefix}{player.Nickname}{roleInfo.NamePostfix}";
-        }
+            {
+                if (namingData == null)
+                    return String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify());
 
-        public static string GetRoleName(Player player)
-        {
-            if (!player.IsHuman)
+                return $"{namingData.NamePrefix}{String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify())}{namingData.NamePostfix}";
+            }
+
+            if (namingData == null)
                 return player.Nickname;
             
-            if (player.Role == RoleType.ClassD && SubclassMod.Instance.Config.ClassDNumbers)
-                return $"{String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify())}";
-            
-            return $"{SubclassMod.Instance.Config.HumanFirstNames.RandomItem()} {SubclassMod.Instance.Config.HumanSecondNames.RandomItem()}";
+            switch (namingData.NamingMethod)
+            {
+                case NamingMethod.Firstname:
+                    return $"{namingData.NamePrefix}{SubclassMod.Instance.Config.HumanFirstNames.RandomItem()}{namingData.NamePostfix} [{player.Nickname}]";
+                case NamingMethod.Signs:
+                    return $"{namingData.NamePrefix}{SubclassMod.Instance.Config.HumanSpecialSigns.RandomItem()}{namingData.NamePostfix} [{player.Nickname}]";
+                default:
+                    return player.Nickname;
+            }
         }
         
         private static int CalcNumericIdentify()
         {
-            // Removed due returns NRE
-            /*int numIdentify;
+            int numIdentify;
 
-            while (true)
+            Player[] displayNamedPlayers = Player.List.Where(x => x.DisplayNickname != null).ToArray();
+
+            do
             {
                 numIdentify = UnityEngine.Random.Range(1000, 9999);
+            } while (displayNamedPlayers.Count(x => x.DisplayNickname.Contains(numIdentify.ToString())) != 0);
 
-                if (Player.List.Count(x => x.CustomInfo.Contains(numIdentify.ToString())) == 0)
-                    break;
-            }*/
-
-            return UnityEngine.Random.Range(1000, 9999);
+            return numIdentify;
         }
     }
 }

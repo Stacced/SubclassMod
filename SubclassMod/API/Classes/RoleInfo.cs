@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using SubclassMod.API.Enums;
+using SubclassMod.API.Interfaces;
 
 namespace SubclassMod.API.Classes
 {
-    public class RoleInfo
+    public class RoleInfo : INamingData
     {
         [Description("Prefix that will be placed before nickname")]
         public string NamePrefix { get; set; } = "Dr.";
@@ -15,14 +17,11 @@ namespace SubclassMod.API.Classes
         [Description("Custom info of overridden role")]
         public string CustomInfo { get; set; } = "Just a sugar doctor";
 
-        [Description("Replace default player name to roleplay name and secondname")]
-        public bool RoleplayNameEnabled { get; set; } = true;
-        
-        [Description("Use second name in player display roleplay nickname")]
-        public bool RoleplaySecondNameEnabled { get; set; } = false;
-
         [Description("Is inventory overridden")]
         public bool InventoryOverridden { get; set; } = false;
+
+        [Description("Naming method for this role")]
+        public NamingMethod NamingMethod { get; set; } = NamingMethod.Nickname;
 
         [Description("Overwritten items list")]
         public List<ItemType> InventoryOverwrite { get; set; } = new List<ItemType>();

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Exiled.API.Enums;
 using SubclassMod.API.Enums;
+using SubclassMod.API.Interfaces;
 using UnityEngine;
 
 namespace SubclassMod.API.Classes
 {
-    public class SubclassInfo
+    public class SubclassInfo : INamingData
     {
         public int Id { get; set; } = 0;
         public int MaxPlayers { get; set; } = 0;
@@ -19,11 +20,10 @@ namespace SubclassMod.API.Classes
         public string CustomInfo { get; set; } = "Unknown Person";
         
         public bool ForceclassOnly { get; set; } = false;
-        public bool RoleplayNameEnabled { get; set; } = true;
-        public bool RoleplaySecondNameEnabled { get; set; } = true;
 
         public RoleType BaseRole { get; set; } = RoleType.ClassD;
         public SpawnMethod SpawnMethod { get; set; } = SpawnMethod.SpawnZone;
+        public NamingMethod NamingMethod { get; set; } = NamingMethod.Nickname;
 
         public Dictionary<AmmoType, ushort> Ammo { get; set; } = new Dictionary<AmmoType, ushort>
         {

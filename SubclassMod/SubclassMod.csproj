@@ -93,6 +93,8 @@
         <Compile Include="API\Classes\Managers\PlayersManager.cs" />
         <Compile Include="API\Classes\Managers\SubclassesManager.cs" />
         <Compile Include="API\Classes\RoleInfo.cs" />
+        <Compile Include="API\Enums\NamingMethod.cs" />
+        <Compile Include="API\Interfaces\INamingData.cs" />
         <Compile Include="Commands\SpawnPlayer.cs" />
         <Compile Include="Components\SubclassedPlayer.cs" />
         <Compile Include="Config.cs" />
