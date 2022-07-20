@@ -16,7 +16,7 @@ namespace SubclassMod
 
         private PlayerHandlers _playerHandlers;
 
-        public override void OnEnabled()
+        public override void OnEnabled() 
         {
             Instance = this;
             
