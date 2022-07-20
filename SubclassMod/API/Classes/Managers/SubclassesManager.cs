@@ -102,7 +102,7 @@ namespace SubclassMod.API.Classes.Managers
                         player.Position = targetRoom.Position + Vector3.up;
                         break;
                     case SpawnMethod.SpawnZone:
-                        player.Position = Room.Get(subclassInfo.SpawnZones.RandomItem()).ToArray().RandomItem().Position + new Vector3(0, 1f, 0);
+                        player.Position = Room.Get(subclassInfo.SpawnZones.RandomItem()).ToArray().RandomItem().Position + Vector3.up;
                         break;
                 }
                 
