@@ -1,7 +1,5 @@
 ﻿using Exiled.Events.EventArgs;
 using SubclassMod.API.Classes.Managers;
-using SubclassMod.Components;
-using UnityEngine;
 
 namespace SubclassMod.Events
 {
@@ -9,13 +7,6 @@ namespace SubclassMod.Events
     {
         public void OnSpawned(SpawnedEventArgs ev) => SubclassesManager.AssignPlayer(ev.Player, ev.Player.Role);
 
-        public void OnChangingRole(ChangingRoleEventArgs ev)
-        {
-            ev.Player.DisplayNickname = null;
-            ev.Player.CustomInfo = null;
-            
-            if (ev.Player.GameObject.TryGetComponent(out SubclassedPlayer subclassedPlayerComponent))
-                Object.Destroy(subclassedPlayerComponent);
-        }
+        public void OnChangingRole(ChangingRoleEventArgs ev) => SubclassesManager.ResetPlayer(ev.Player);
     }
 }

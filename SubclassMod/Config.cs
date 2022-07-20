@@ -18,8 +18,8 @@ namespace SubclassMod
         [Description("First names for human classes")]
         public List<string> HumanFirstNames { get; set; } = new List<string>();
         
-        [Description("Second names for human classes")]
-        public List<string> HumanSecondNames { get; set; } = new List<string>();
+        [Description("Special signs for human classes")]
+        public List<string> HumanSpecialSigns { get; set; } = new List<string>();
 
         [Description("Additional info for roles")]
         public Dictionary<RoleType, RoleInfo> CustomRolesInfo { get; set; } = new Dictionary<RoleType, RoleInfo>

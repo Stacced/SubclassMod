@@ -11,7 +11,7 @@ namespace SubclassMod
         public override string Name => "SubclassMod";
         public override string Author => "microsievert";
         
-        public override Version Version { get; } = new Version(1, 0, 8);
+        public override Version Version { get; } = new Version(1, 0, 9);
         public override Version RequiredExiledVersion { get; } = new Version(5, 0, 0);
 
         private PlayerHandlers _playerHandlers;
