@@ -13,9 +13,9 @@ namespace SubclassMod.API.Classes.Managers
             if (player.Role == RoleType.ClassD && SubclassMod.Instance.Config.ClassDNumbers)
             {
                 if (namingData == null)
-                    return String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify());
+                    return $"{String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify())} [{player.Nickname}]";
 
-                return $"{namingData.NamePrefix}{String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify())}{namingData.NamePostfix}";
+                return $"{namingData.NamePrefix}{String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify())}{namingData.NamePostfix} [{player.Nickname}]";
             }
 
             if (namingData == null)
@@ -39,9 +39,8 @@ namespace SubclassMod.API.Classes.Managers
             Player[] displayNamedPlayers = Player.List.Where(x => x.DisplayNickname != null).ToArray();
 
             do
-            {
-                numIdentify = UnityEngine.Random.Range(1000, 9999);
-            } while (displayNamedPlayers.Count(x => x.DisplayNickname.Contains(numIdentify.ToString())) != 0);
+                numIdentify = UnityEngine.Random.Range(1000, 9999); 
+            while (displayNamedPlayers.Count(x => x.DisplayNickname.Contains(numIdentify.ToString())) != 0);
 
             return numIdentify;
         }

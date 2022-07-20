@@ -14,8 +14,6 @@ namespace SubclassMod.API.Classes.Managers
 {
     public static class SubclassesManager
     {
-        // TODO: May be here i'll use queues for spawn players.
-
         private static readonly Dictionary<SubclassInfo, byte> SubclassedCounter = new Dictionary<SubclassInfo, byte>();
         
         public static void AssignPlayer(Player player, RoleType role)
@@ -59,20 +57,6 @@ namespace SubclassMod.API.Classes.Managers
                 Object.Destroy(subclassedPlayerComponent);
         }
 
-        public static bool TryGetSubclasses(RoleType role, out SubclassInfo[] subclasses)
-        {
-            SubclassInfo[] roleSubclasses = SubclassMod.Instance.Config.CustomSubclasses.Where(x => x.BaseRole == role && !x.ForceclassOnly && IsSubclassFree(x)).ToArray();
-
-            if (roleSubclasses.Length == 0)
-            {
-                subclasses = null;
-                return false;
-            }
-
-            subclasses = roleSubclasses;
-            return true;
-        }
-
         public static bool TryGetSubclasses(int id, out SubclassInfo[] subclasses)
         {
             SubclassInfo[] targetSubclasses =
@@ -103,6 +87,7 @@ namespace SubclassMod.API.Classes.Managers
                     player.SetRole(subclassInfo.BaseRole);
 
                 SubclassedPlayer subclassPlayer = player.GameObject.AddComponent<SubclassedPlayer>();
+                
                 subclassPlayer.ActiveSubclass = subclassInfo;
 
                 switch (subclassInfo.SpawnMethod)
@@ -111,17 +96,20 @@ namespace SubclassMod.API.Classes.Managers
                         player.Position = subclassInfo.SpawnPositions.RandomItem();
                         break;
                     case SpawnMethod.SpawnRooms:
-                        player.Position = Room.Get(subclassInfo.SpawnRooms.RandomItem()).Position + new Vector3(0, 1f, 0);
+                        Room targetRoom = Room.Get(subclassInfo.SpawnRooms.RandomItem()) ??
+                                          Room.Get(RoomType.EzIntercom);
+
+                        player.Position = targetRoom.Position + Vector3.up;
                         break;
                     case SpawnMethod.SpawnZone:
-                        player.Position = Room.Get(subclassInfo.SpawnZones.RandomItem()).ToArray().RandomItem().Position + new Vector3(0, 1f, 0);;
+                        player.Position = Room.Get(subclassInfo.SpawnZones.RandomItem()).ToArray().RandomItem().Position + new Vector3(0, 1f, 0);
                         break;
                 }
-
+                
                 player.Health = subclassInfo.Health;
-
+                
                 player.ClearInventory();
-
+                
                 foreach (ItemType item in subclassInfo.Items)
                     player.AddItem(item);
 
@@ -129,6 +117,7 @@ namespace SubclassMod.API.Classes.Managers
                     player.AddAmmo(type, subclassInfo.Ammo[type]);
 
                 player.DisplayNickname = NicknamesManager.GetRoleName(player, subclassInfo);
+
                 player.CustomInfo = subclassInfo.CustomInfo;
 
                 BroadcastRole(player, player.DisplayNickname, subclassInfo.Name, subclassInfo.Description);
@@ -142,6 +131,20 @@ namespace SubclassMod.API.Classes.Managers
             {
                 Log.Debug($"{e.Message} | {e.Source} | {e.StackTrace}");
             }
+        }
+        
+        private static bool TryGetSubclasses(RoleType role, out SubclassInfo[] subclasses)
+        {
+            SubclassInfo[] roleSubclasses = SubclassMod.Instance.Config.CustomSubclasses.Where(x => x.BaseRole == role && !x.ForceclassOnly && IsSubclassFree(x)).ToArray();
+
+            if (roleSubclasses.Length == 0)
+            {
+                subclasses = null;
+                return false;
+            }
+
+            subclasses = roleSubclasses;
+            return true;
         }
 
         private static IEnumerator<float> ForceAsOverriddenRole(Player player, RoleInfo roleInfo)
@@ -180,8 +183,8 @@ namespace SubclassMod.API.Classes.Managers
             if (subclassInfo.MaxPlayers.Equals(0))
                 return true;
             
-            if (Random.Range(0, 100) <= subclassInfo.SpawnPercent)
-                return true;
+            if (Random.Range(0, 100) >= subclassInfo.SpawnPercent)
+                return false;
 
             if (!SubclassedCounter.ContainsKey(subclassInfo))
                 return true;
