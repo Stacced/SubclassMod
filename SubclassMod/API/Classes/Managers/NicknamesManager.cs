@@ -8,7 +8,7 @@ namespace SubclassMod.API.Classes.Managers
 {
     public static class NicknamesManager
     {
-        public static string GetRoleName(Player player, INamingData namingData = null)
+        public static string GetRoleName(Player player, INamedRole namingData = null)
         {
             if (player.Role == RoleType.ClassD && SubclassMod.Instance.Config.ClassDNumbers)
             {
@@ -23,9 +23,9 @@ namespace SubclassMod.API.Classes.Managers
             
             switch (namingData.NamingMethod)
             {
-                case NamingMethod.Firstname:
+                case NamingMethod.Firstname when SubclassMod.Instance.Config.HumanFirstNames.Any():
                     return $"{namingData.NamePrefix}{SubclassMod.Instance.Config.HumanFirstNames.RandomItem()}{namingData.NamePostfix} [{player.Nickname}]";
-                case NamingMethod.Signs:
+                case NamingMethod.Signs when SubclassMod.Instance.Config.HumanSpecialSigns.Any():
                     return $"{namingData.NamePrefix}{SubclassMod.Instance.Config.HumanSpecialSigns.RandomItem()}{namingData.NamePostfix} [{player.Nickname}]";
                 default:
                     return player.Nickname;

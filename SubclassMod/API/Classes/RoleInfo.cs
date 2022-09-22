@@ -6,7 +6,7 @@ using SubclassMod.API.Interfaces;
 
 namespace SubclassMod.API.Classes
 {
-    public class RoleInfo : INamingData
+    public class RoleInfo : INamedRole
     {
         [Description("Prefix that will be placed before nickname")]
         public string NamePrefix { get; set; } = "Dr.";

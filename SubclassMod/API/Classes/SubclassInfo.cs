@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SubclassMod.API.Classes
 {
-    public class SubclassInfo : INamingData
+    public class SubclassInfo : INamedRole
     {
         public int Id { get; set; } = 0;
         public int MaxPlayers { get; set; } = 0;

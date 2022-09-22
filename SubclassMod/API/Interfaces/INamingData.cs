@@ -2,7 +2,7 @@
 
 namespace SubclassMod.API.Interfaces
 {
-    public interface INamingData
+    public interface INamedRole
     {
       string NamePrefix { get; set; }  
       string NamePostfix { get; set; }
