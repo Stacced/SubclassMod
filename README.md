@@ -1,4 +1,4 @@
-## SubclassMod (v1.0.9) (EXILED-5.2.1)
+## SubclassMod (v1.1.0) (EXILED-5.2.1)
 This is a game modification for SCP:SL that adds to the game the ability to create and configure subclasses, as well as modify existing game roles. This modification will allow you to create your own subclasses and customize them as you like, up to replacing the HP level. Or you can customize the entire class by changing its name/prefix/postfix or overwriting the inventory for a particular class. Also support roleplay firstnames and secondnames for human classes and class d badges for d boiz.
 
 ## Installation
