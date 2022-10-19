@@ -1,14 +1,17 @@
-## SubclassMod (v1.1.0) (EXILED-5.2.1)
+## SubclassMod (v2.0.0) (EXILED-5.2.1)
 This is a game modification for SCP:SL that adds to the game the ability to create and configure subclasses, as well as modify existing game roles. This modification will allow you to create your own subclasses and customize them as you like, up to replacing the HP level. Or you can customize the entire class by changing its name/prefix/postfix or overwriting the inventory for a particular class. Also support roleplay firstnames and secondnames for human classes and class d badges for d boiz.
 
 ## Installation
-Download latest plugin release and put ``SubclassMod.dll`` inside your ``/EXILED/Plugins/`` folder. All features can be customized in config and translations. __EXILED-5.0.0 version required__.
+Download latest plugin release and put ``SubclassMod.dll`` inside your ``/EXILED/Plugins/`` folder. All features can be customized in config and translations. __EXILED-5.2.0 version required__.
 
 ## Commands
 
-### ``force`` - Force player as subclass
+### ``force`` - Force player as subclass (Remote admin)
 Permission: ``scmod.force``
 Usage: ``force <playerId/*> <subclassId>``
+
+### ``.character-select`` - Spawn as character (Client console)
+Usage: ``.character-select <characterId>``
 
 ## Configs Management
 Example of creating custom subclass and customizating roles (**Every new subclass should start from '-' and have unique ID**):
@@ -52,6 +55,8 @@ Example of creating custom subclass and customizating roles (**Every new subclas
     - Coin
     - KeycardResearchCoordinator
     - ParticleDisruptor
+    # (NEW FEATURE) Ability to give player that playing as subclass any EXILED CustomItem by them id
+    custom_items: [200, 201]
     # Values for spawn methods (ALL BELOW)
     spawn_zones:
     - Entrance
@@ -80,4 +85,23 @@ Example of creating custom subclass and customizating roles (**Every new subclas
       inventory_overridden: false
       # Overwritten class items list
       inventory_overwrite: []
+      inventory_custom_items: [200, 201] # EXILED CustomItems that will be added to player inventory
+```
+
+### Personal custom character creation example
+```yml
+  - id: 0 # Character id that will be used by .character-select command
+    scale: 1 # Player model scale
+    name: Dr. Candy # Player display nickname
+    info: Just a sugar doctor # Player custom info
+    base_role: Tutorial # Role on that will be based this character
+    spawn_zone: LightContainment 
+    allowed_users: # Users that will be allowed to spawn as this character using console command
+    - 76561198306330559@steam
+    inventory_override: # Inventory override for custom character
+    - KeycardContainmentEngineer
+    - Flashlight
+    - Coin
+    - Painkillers
+    inventory_custom_items: [] # EXILED CustomItems that will be added to player inventory
 ```
