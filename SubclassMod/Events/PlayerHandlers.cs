@@ -1,4 +1,5 @@
 ﻿using Exiled.Events.EventArgs;
+
 using SubclassMod.API.Classes.Managers;
 
 namespace SubclassMod.Events

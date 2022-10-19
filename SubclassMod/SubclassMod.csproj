@@ -39,7 +39,7 @@
       <HintPath>..\packages\EXILED.5.2.1\lib\net472\Assembly-CSharp-Publicized.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\SteamServers\scpsl\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>..\..\..\..\SteamServers\scpsl\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EXILED.5.2.1\lib\net472\CommandSystem.Core.dll</HintPath>
@@ -72,7 +72,7 @@
       <HintPath>..\packages\EXILED.5.2.1\lib\net472\Exiled.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
-      <HintPath>..\..\..\SteamServers\scpsl\SCPSL_Data\Managed\Mirror.dll</HintPath>
+      <HintPath>..\..\..\..\SteamServers\scpsl\SCPSL_Data\Managed\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="NorthwoodLib, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EXILED.5.2.1\lib\net472\NorthwoodLib.dll</HintPath>
@@ -82,19 +82,21 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\SteamServers\scpsl\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\..\SteamServers\scpsl\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
       <HintPath>..\packages\YamlDotNet.11.2.1\lib\net45\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Classes\CharacterInfo.cs" />
     <Compile Include="API\Classes\Managers\NicknamesManager.cs" />
     <Compile Include="API\Classes\Managers\PlayersManager.cs" />
     <Compile Include="API\Classes\Managers\SubclassesManager.cs" />
     <Compile Include="API\Classes\RoleInfo.cs" />
     <Compile Include="API\Enums\NamingMethod.cs" />
-    <Compile Include="API\Interfaces\INamingData.cs" />
+    <Compile Include="API\Interfaces\INamedRole.cs" />
+    <Compile Include="Commands\SelectCharacter.cs" />
     <Compile Include="Commands\SpawnPlayer.cs" />
     <Compile Include="Components\SubclassedPlayer.cs" />
     <Compile Include="Config.cs" />

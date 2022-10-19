@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.CustomItems.API.Features;
 using SubclassMod.API.Enums;
 using SubclassMod.Components;
+
 using UnityEngine;
+
 using MEC;
+
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -14,10 +19,21 @@ namespace SubclassMod.API.Classes.Managers
 {
     public static class SubclassesManager
     {
-        private static readonly Dictionary<SubclassInfo, byte> SubclassedCounter = new Dictionary<SubclassInfo, byte>();
+        private static readonly Dictionary<SubclassInfo, byte> _subclassedCounter = new Dictionary<SubclassInfo, byte>();
+        private static readonly List<string> _ignoredPlayers = new List<string>();
+        
+        public static void SpawnCustomCharacter(Player player, CharacterInfo character) =>
+            Timing.RunCoroutine(ForceAsCharacter(player, character));
         
         public static void AssignPlayer(Player player, RoleType role)
         {
+            if (_ignoredPlayers.Contains(player.UserId))
+            {
+                _ignoredPlayers.Remove(player.UserId);
+                
+                return;
+            }
+
             if (role.Equals(RoleType.Tutorial))
                 return;
             
@@ -72,6 +88,20 @@ namespace SubclassMod.API.Classes.Managers
             return true;
         }
         
+        private static bool TryGetSubclasses(RoleType role, out SubclassInfo[] subclasses)
+        {
+            SubclassInfo[] roleSubclasses = SubclassMod.Instance.Config.CustomSubclasses.Where(x => x.BaseRole == role && !x.ForceclassOnly && IsSubclassFree(x)).ToArray();
+
+            if (roleSubclasses.Length == 0)
+            {
+                subclasses = null;
+                return false;
+            }
+
+            subclasses = roleSubclasses;
+            return true;
+        }
+        
         public static IEnumerator<float> ForceAsSubclass(Player player, SubclassInfo subclassInfo)
         {
             RoleType initialRole = player.Role;
@@ -113,6 +143,9 @@ namespace SubclassMod.API.Classes.Managers
                 foreach (ItemType item in subclassInfo.Items)
                     player.AddItem(item);
 
+                foreach (int itemId in subclassInfo.CustomItems)
+                    CustomItem.TryGive(player, itemId, false);
+
                 foreach (AmmoType type in subclassInfo.Ammo.Keys)
                     player.AddAmmo(type, subclassInfo.Ammo[type]);
 
@@ -122,29 +155,15 @@ namespace SubclassMod.API.Classes.Managers
 
                 BroadcastRole(player, player.DisplayNickname, subclassInfo.Name, subclassInfo.Description);
 
-                if (SubclassedCounter.ContainsKey(subclassInfo))
-                    SubclassedCounter[subclassInfo] += 1;
+                if (_subclassedCounter.ContainsKey(subclassInfo))
+                    _subclassedCounter[subclassInfo] += 1;
                 else 
-                    SubclassedCounter.Add(subclassInfo, 1);
+                    _subclassedCounter.Add(subclassInfo, 1);
             }
             catch (Exception e)
             {
                 Log.Debug($"{e.Message} | {e.Source} | {e.StackTrace}");
             }
-        }
-        
-        private static bool TryGetSubclasses(RoleType role, out SubclassInfo[] subclasses)
-        {
-            SubclassInfo[] roleSubclasses = SubclassMod.Instance.Config.CustomSubclasses.Where(x => x.BaseRole == role && !x.ForceclassOnly && IsSubclassFree(x)).ToArray();
-
-            if (roleSubclasses.Length == 0)
-            {
-                subclasses = null;
-                return false;
-            }
-
-            subclasses = roleSubclasses;
-            return true;
         }
 
         private static IEnumerator<float> ForceAsOverriddenRole(Player player, RoleInfo roleInfo)
@@ -170,12 +189,43 @@ namespace SubclassMod.API.Classes.Managers
                 
                     foreach (ItemType item in roleInfo.InventoryOverwrite)
                         player.AddItem(item);
+                    
+                    foreach (int itemId in roleInfo.InventoryCustomItems)
+                        CustomItem.TryGive(player, itemId, false);
                 }
             }
             catch (Exception e)
             {
                 Log.Debug($"{e.Message} | {e.Source} | {e.StackTrace}");
             }
+        }
+
+        private static IEnumerator<float> ForceAsCharacter(Player player, CharacterInfo characterInfo)
+        {
+            _ignoredPlayers.Add(player.UserId);
+
+            yield return Timing.WaitForSeconds(0.15f);
+            
+            player.SetRole(characterInfo.BaseRole);
+
+            yield return Timing.WaitForSeconds(0.45f);
+
+            Room spawnRoom = Room.Random(characterInfo.SpawnZone);
+
+            player.Position = spawnRoom.Position + Vector3.up;
+
+            player.ClearInventory();
+
+            foreach (ItemType item in characterInfo.InventoryOverride)
+                player.AddItem(item);
+            
+            foreach (int itemId in characterInfo.InventoryCustomItems)
+                CustomItem.TryGive(player, itemId, false);
+
+            player.Scale = Vector3.one * characterInfo.Scale;
+
+            player.CustomInfo = characterInfo.Info;
+            player.DisplayNickname = characterInfo.Name;
         }
 
         private static bool IsSubclassFree(SubclassInfo subclassInfo)
@@ -186,10 +236,10 @@ namespace SubclassMod.API.Classes.Managers
             if (Random.Range(0, 100) >= subclassInfo.SpawnPercent)
                 return false;
 
-            if (!SubclassedCounter.ContainsKey(subclassInfo))
+            if (!_subclassedCounter.ContainsKey(subclassInfo))
                 return true;
 
-            return SubclassedCounter[subclassInfo] < subclassInfo.MaxPlayers;
+            return _subclassedCounter[subclassInfo] < subclassInfo.MaxPlayers;
         }
 
         private static void BroadcastRole(Player player, string roleName, string className, string classDescription) =>

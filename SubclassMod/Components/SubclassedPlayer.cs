@@ -1,4 +1,5 @@
 ﻿using SubclassMod.API.Classes;
+
 using UnityEngine;
 
 namespace SubclassMod.Components

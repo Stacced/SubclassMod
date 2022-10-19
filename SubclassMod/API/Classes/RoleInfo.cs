@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+
 using SubclassMod.API.Enums;
 using SubclassMod.API.Interfaces;
 
@@ -25,5 +26,8 @@ namespace SubclassMod.API.Classes
 
         [Description("Overwritten items list")]
         public List<ItemType> InventoryOverwrite { get; set; } = new List<ItemType>();
+
+        [Description("Add any EXILED custom items by id")]
+        public List<int> InventoryCustomItems { get; set; } = new List<int>();
     }
 }

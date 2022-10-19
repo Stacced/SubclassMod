@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+
 using Exiled.API.Enums;
+
 using SubclassMod.API.Enums;
 using SubclassMod.API.Interfaces;
+
 using UnityEngine;
 
 namespace SubclassMod.API.Classes
@@ -32,9 +35,11 @@ namespace SubclassMod.API.Classes
             [AmmoType.Nato762] = 10
         };
 
-        public ItemType[] Items { get; set; } = { ItemType.Coin };
-        public ZoneType[] SpawnZones { get; set; } = { ZoneType.Entrance };
-        public RoomType[] SpawnRooms { get; set; } = { RoomType.LczChkpA };
-        public Vector3[] SpawnPositions { get; set; } = { Vector3.zero };
+        public List<int> CustomItems { get; set; } = new List<int>();
+        
+        public List<ItemType> Items { get; set; } = new List<ItemType>();
+        public List<ZoneType> SpawnZones { get; set; } = new List<ZoneType>();
+        public List<RoomType> SpawnRooms { get; set; } = new List<RoomType>();
+        public List<Vector3> SpawnPositions { get; set; } = new List<Vector3>();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+
 using Exiled.API.Features;
 
 namespace SubclassMod.API.Classes.Managers

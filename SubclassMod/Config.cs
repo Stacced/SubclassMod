@@ -31,5 +31,7 @@ namespace SubclassMod
         [Description("List of subclasses for every base role. EVERY new custom subclass start from - (ID'S SHOULD BE UNIQUE)")]
         public List<SubclassInfo> CustomSubclasses { get; set; } = new List<SubclassInfo>();
 
+        [Description("List of player's personal custom characters that can be selected by console command")]
+        public List<CharacterInfo> CustomCharacters { get; set; } = new List<CharacterInfo>();
     }
 }
