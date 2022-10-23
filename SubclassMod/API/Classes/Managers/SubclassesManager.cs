@@ -21,6 +21,12 @@ namespace SubclassMod.API.Classes.Managers
     {
         private static readonly Dictionary<SubclassInfo, byte> _subclassedCounter = new Dictionary<SubclassInfo, byte>();
         private static readonly List<string> _ignoredPlayers = new List<string>();
+
+        private static readonly List<RoomType> _ignoredRooms = new List<RoomType>
+        {
+            RoomType.EzCollapsedTunnel,
+            RoomType.EzShelter
+        };
         
         public static void SpawnCustomCharacter(Player player, CharacterInfo character) =>
             Timing.RunCoroutine(ForceAsCharacter(player, character));
@@ -132,7 +138,8 @@ namespace SubclassMod.API.Classes.Managers
                         player.Position = targetRoom.Position + Vector3.up;
                         break;
                     case SpawnMethod.SpawnZone:
-                        player.Position = Room.Get(subclassInfo.SpawnZones.RandomItem()).ToArray().RandomItem().Position + Vector3.up;
+                        ZoneType targetZone = subclassInfo.SpawnZones.RandomItem();
+                        player.Position = Room.List.Where(x => x.Zone == targetZone && !_ignoredRooms.Contains(x.Type)).ToList().RandomItem().Position + Vector3.up;
                         break;
                 }
                 
