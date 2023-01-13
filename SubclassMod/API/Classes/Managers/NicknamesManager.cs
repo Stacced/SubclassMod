@@ -2,9 +2,10 @@
 using System.Linq;
 
 using Exiled.API.Features;
-
 using SubclassMod.API.Enums;
 using SubclassMod.API.Interfaces;
+
+using PlayerRoles;
 
 namespace SubclassMod.API.Classes.Managers
 {
@@ -12,7 +13,7 @@ namespace SubclassMod.API.Classes.Managers
     {
         public static string GetRoleName(Player player, INamedRole namingData = null)
         {
-            if (player.Role == RoleType.ClassD && SubclassMod.Instance.Config.ClassDNumbers)
+            if (player.Role.Type == RoleTypeId.ClassD && SubclassMod.Instance.Config.ClassDNumbers)
             {
                 if (namingData == null)
                     return $"{String.Format(SubclassMod.Instance.Translation.ClassDBadge, CalcNumericIdentify())} [{player.Nickname}]";

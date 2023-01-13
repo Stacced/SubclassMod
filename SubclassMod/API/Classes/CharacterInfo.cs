@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 using Exiled.API.Enums;
 
+using PlayerRoles;
+
 namespace SubclassMod.API.Classes
 {
     public class CharacterInfo
@@ -12,7 +14,7 @@ namespace SubclassMod.API.Classes
         public string Name { get; set; } = "Default name";
         public string Info { get; set; } = "Default Info";
 
-        public RoleType BaseRole { get; set; } = RoleType.Spectator;
+        public RoleTypeId BaseRole { get; set; } = RoleTypeId.Spectator;
         public ZoneType SpawnZone { get; set; } = ZoneType.Entrance;
 
         public List<string> AllowedUsers { get; set; } = new List<string>();

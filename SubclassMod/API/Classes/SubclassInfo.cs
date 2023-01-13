@@ -7,6 +7,8 @@ using SubclassMod.API.Interfaces;
 
 using UnityEngine;
 
+using PlayerRoles;
+
 namespace SubclassMod.API.Classes
 {
     public class SubclassInfo : INamedRole
@@ -24,7 +26,7 @@ namespace SubclassMod.API.Classes
         
         public bool ForceclassOnly { get; set; } = false;
 
-        public RoleType BaseRole { get; set; } = RoleType.ClassD;
+        public RoleTypeId BaseRole { get; set; } = RoleTypeId.ClassD;
         public SpawnMethod SpawnMethod { get; set; } = SpawnMethod.SpawnZone;
         public NamingMethod NamingMethod { get; set; } = NamingMethod.Nickname;
 

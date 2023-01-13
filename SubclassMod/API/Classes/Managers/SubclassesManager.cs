@@ -5,12 +5,15 @@ using System.Linq;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.CustomItems.API.Features;
+
 using SubclassMod.API.Enums;
 using SubclassMod.Components;
 
 using UnityEngine;
 
 using MEC;
+
+using PlayerRoles;
 
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -25,13 +28,13 @@ namespace SubclassMod.API.Classes.Managers
         private static readonly List<RoomType> _ignoredRooms = new List<RoomType>
         {
             RoomType.EzCollapsedTunnel,
-            RoomType.EzShelter
+            RoomType.EzCollapsedTunnel
         };
         
         public static void SpawnCustomCharacter(Player player, CharacterInfo character) =>
             Timing.RunCoroutine(ForceAsCharacter(player, character));
         
-        public static void AssignPlayer(Player player, RoleType role)
+        public static void AssignPlayer(Player player, RoleTypeId role)
         {
             if (_ignoredPlayers.Contains(player.UserId))
             {
@@ -40,7 +43,7 @@ namespace SubclassMod.API.Classes.Managers
                 return;
             }
 
-            if (role.Equals(RoleType.Tutorial))
+            if (role.Equals(RoleTypeId.Tutorial))
                 return;
             
             if (player.GameObject.TryGetComponent<SubclassedPlayer>(out _))
@@ -94,7 +97,7 @@ namespace SubclassMod.API.Classes.Managers
             return true;
         }
         
-        private static bool TryGetSubclasses(RoleType role, out SubclassInfo[] subclasses)
+        private static bool TryGetSubclasses(RoleTypeId role, out SubclassInfo[] subclasses)
         {
             SubclassInfo[] roleSubclasses = SubclassMod.Instance.Config.CustomSubclasses.Where(x => x.BaseRole == role && !x.ForceclassOnly && IsSubclassFree(x)).ToArray();
 
@@ -110,7 +113,7 @@ namespace SubclassMod.API.Classes.Managers
         
         public static IEnumerator<float> ForceAsSubclass(Player player, SubclassInfo subclassInfo)
         {
-            RoleType initialRole = player.Role;
+            RoleTypeId initialRole = player.Role.Type;
             
             yield return Timing.WaitForSeconds(0.35f);
 
@@ -119,8 +122,8 @@ namespace SubclassMod.API.Classes.Managers
             
             try
             {
-                if (player.Role != subclassInfo.BaseRole)
-                    player.SetRole(subclassInfo.BaseRole);
+                if (player.Role.Type != subclassInfo.BaseRole)
+                    player.RoleManager.ServerSetRole(subclassInfo.BaseRole, RoleChangeReason.Respawn);
 
                 SubclassedPlayer subclassPlayer = player.GameObject.AddComponent<SubclassedPlayer>();
                 
@@ -175,7 +178,7 @@ namespace SubclassMod.API.Classes.Managers
 
         private static IEnumerator<float> ForceAsOverriddenRole(Player player, RoleInfo roleInfo)
         {
-            RoleType initialRole = player.Role;
+            RoleTypeId initialRole = player.Role;
             
             yield return Timing.WaitForSeconds(0.35f);
 
@@ -212,8 +215,8 @@ namespace SubclassMod.API.Classes.Managers
             _ignoredPlayers.Add(player.UserId);
 
             yield return Timing.WaitForSeconds(0.15f);
-            
-            player.SetRole(characterInfo.BaseRole);
+
+            player.RoleManager.ServerSetRole(characterInfo.BaseRole, RoleChangeReason.Respawn);
 
             yield return Timing.WaitForSeconds(0.45f);
 

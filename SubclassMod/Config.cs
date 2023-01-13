@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+
 using Exiled.API.Interfaces;
+
+using PlayerRoles;
+
 using SubclassMod.API.Classes;
 
 namespace SubclassMod
@@ -8,6 +12,8 @@ namespace SubclassMod
     public class Config : IConfig
     {
         public bool IsEnabled { get; set; } = true;
+
+        public bool Debug { get; set; } = false;
 
         [Description("Replace roleplay names for class d to number identificators")]
         public bool ClassDNumbers { get; set; } = false;
@@ -22,10 +28,10 @@ namespace SubclassMod
         public List<string> HumanSpecialSigns { get; set; } = new List<string>();
 
         [Description("Additional info for roles")]
-        public Dictionary<RoleType, RoleInfo> CustomRolesInfo { get; set; } = new Dictionary<RoleType, RoleInfo>
+        public Dictionary<RoleTypeId, RoleInfo> CustomRolesInfo { get; set; } = new Dictionary<RoleTypeId, RoleInfo>
         {
-            [RoleType.FacilityGuard] = new RoleInfo(),
-            [RoleType.Scientist] = new RoleInfo()
+            [RoleTypeId.FacilityGuard] = new RoleInfo(),
+            [RoleTypeId.Scientist] = new RoleInfo()
         };
         
         [Description("List of subclasses for every base role. EVERY new custom subclass start from - (ID'S SHOULD BE UNIQUE)")]

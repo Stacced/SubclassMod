@@ -26,7 +26,7 @@ namespace SubclassMod.Commands
                 return false;
             }
 
-            if (!int.TryParse(arguments.At<string>(0), out int characterId))
+            if (!int.TryParse(arguments.At(0), out int characterId))
             {
                 response = "Incorrect argument format. Expected number (CHARACTER ID)";
                 return false;
