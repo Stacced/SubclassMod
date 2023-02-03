@@ -11,7 +11,7 @@ namespace SubclassMod.API.Classes.Managers
             if (mention.Equals("*"))
             {
                 players = Player.List.ToArray();
-                return true;
+                return true; 
             }
 
             if (int.TryParse(mention, out int playerId))

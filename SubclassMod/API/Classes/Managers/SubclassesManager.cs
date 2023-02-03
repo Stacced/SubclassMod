@@ -23,12 +23,14 @@ namespace SubclassMod.API.Classes.Managers
     public static class SubclassesManager
     {
         private static readonly Dictionary<SubclassInfo, byte> _subclassedCounter = new Dictionary<SubclassInfo, byte>();
+        
         private static readonly List<string> _ignoredPlayers = new List<string>();
-
         private static readonly List<RoomType> _ignoredRooms = new List<RoomType>
         {
+            RoomType.EzShelter,
             RoomType.EzCollapsedTunnel,
-            RoomType.EzCollapsedTunnel
+            RoomType.Lcz173,
+            RoomType.Lcz914,
         };
         
         public static void SpawnCustomCharacter(Player player, CharacterInfo character) =>
