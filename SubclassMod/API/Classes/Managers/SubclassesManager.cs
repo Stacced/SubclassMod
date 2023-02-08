@@ -31,6 +31,7 @@ namespace SubclassMod.API.Classes.Managers
             RoomType.EzCollapsedTunnel,
             RoomType.Lcz173,
             RoomType.Lcz914,
+            RoomType.LczArmory
         };
         
         public static void SpawnCustomCharacter(Player player, CharacterInfo character) =>
