@@ -72,14 +72,13 @@ namespace SubclassMod.API.Classes.Managers
                 return;
             }
 
-
-            player.DisplayNickname = NicknamesManager.GetRoleName(player);
+            // player.DisplayNickname = NicknamesManager.GetRoleName(player);
         }
 
         public static void ResetPlayer(Player player)
         {
-            player.CustomInfo = null;
-            player.DisplayNickname = null;
+            // player.CustomInfo = string.Empty;
+            // player.DisplayNickname = null;
 
             if (player.GameObject.TryGetComponent(out SubclassedPlayer subclassedPlayerComponent))
                 Object.Destroy(subclassedPlayerComponent);
@@ -157,16 +156,16 @@ namespace SubclassMod.API.Classes.Managers
                     player.AddItem(item);
 
                 foreach (int itemId in subclassInfo.CustomItems)
-                    CustomItem.TryGive(player, itemId, false);
+                    CustomItem.TryGive(player, (uint)itemId, false);
 
                 foreach (AmmoType type in subclassInfo.Ammo.Keys)
                     player.AddAmmo(type, subclassInfo.Ammo[type]);
 
-                player.DisplayNickname = NicknamesManager.GetRoleName(player, subclassInfo);
+                // player.DisplayNickname = NicknamesManager.GetRoleName(player, subclassInfo);
 
-                player.CustomInfo = subclassInfo.CustomInfo;
+                // player.CustomInfo = subclassInfo.CustomInfo;
 
-                BroadcastRole(player, player.DisplayNickname, subclassInfo.Name, subclassInfo.Description);
+                BroadcastRole(player, player.Nickname, subclassInfo.Name, subclassInfo.Description);
 
                 if (_subclassedCounter.ContainsKey(subclassInfo))
                     _subclassedCounter[subclassInfo] += 1;
@@ -193,8 +192,8 @@ namespace SubclassMod.API.Classes.Managers
                 SubclassedPlayer subclassPlayer = player.GameObject.AddComponent<SubclassedPlayer>();
                 subclassPlayer.ActiveRole = roleInfo;
 
-                player.DisplayNickname = NicknamesManager.GetRoleName(player, roleInfo);
-                player.CustomInfo = roleInfo.CustomInfo;
+                // player.DisplayNickname = NicknamesManager.GetRoleName(player, roleInfo);
+                // player.CustomInfo = roleInfo.CustomInfo;
 
                 if (roleInfo.InventoryOverridden)
                 {
@@ -204,7 +203,7 @@ namespace SubclassMod.API.Classes.Managers
                         player.AddItem(item);
                     
                     foreach (int itemId in roleInfo.InventoryCustomItems)
-                        CustomItem.TryGive(player, itemId, false);
+                        CustomItem.TryGive(player, (uint)itemId, false);
                 }
             }
             catch (Exception e)
@@ -233,12 +232,12 @@ namespace SubclassMod.API.Classes.Managers
                 player.AddItem(item);
             
             foreach (int itemId in characterInfo.InventoryCustomItems)
-                CustomItem.TryGive(player, itemId, false);
+                CustomItem.TryGive(player, (uint)itemId, false);
 
             player.Scale = Vector3.one * characterInfo.Scale;
 
-            player.CustomInfo = characterInfo.Info;
-            player.DisplayNickname = characterInfo.Name;
+            // player.CustomInfo = characterInfo.Info;
+            // player.DisplayNickname = characterInfo.Name;
         }
 
         private static bool IsSubclassFree(SubclassInfo subclassInfo)
